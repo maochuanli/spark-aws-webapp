@@ -12,7 +12,9 @@ import traceback
 
 
 def index(request):
-    return render(request, 'app/index.html', {})
+    bucket_name = os.environ["BUCKET_NAME"]
+    file_name_list = ['ab', 'de', 'ef']
+    return render(request, 'app/index.html', {'bucket_name': bucket_name, 'file_name_list': file_name_list})
 
 
 def upload_file(request):
@@ -34,6 +36,6 @@ def handle_uploaded_file(f):
 
         obj = bucket.Object(f.name)
         obj.upload_fileobj(f)
-    except Exception as e:
+    except Exception:
         err = traceback.format_exc()
         print(str(err))

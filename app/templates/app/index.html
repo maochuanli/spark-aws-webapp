@@ -1,13 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome Spark FileServer with AWS Bucket Support</h1>
+<h2>Please choose your a file from your local file system and upload it to AWS Bucket</h2>
 
-  <body>
 
-    <form  name="form1" action="/upload" method="post" enctype="multipart/form-data">
+    <form name="form1" action="/upload" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-      <input type="file" name="uploadFile" />
-      <input type="submit" /></form>
+        <input type="file" name="uploadFile"/>
+        <input type="submit" name="Upload File"/>
+    </form>
 
+<h2>The current files in the Bucket {{bucket_name}}</h2>
+<ul>
+    {% for file_name in file_name_list %}
+    <h2>
+        <li>{{ file_name }}</li>
+    </h2>
 
-  </body>
+    {% endfor %}
+</ul>
+
+</body>
 </html>
