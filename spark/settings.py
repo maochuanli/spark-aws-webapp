@@ -35,9 +35,9 @@ os.environ["BUCKET_NAME"] = bucket_name
 SECRET_KEY = 'g(5(z+r6ll+6qw1ad9s@20+m3jdn2-j^#w+n--uy0n2uidam$4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'www.guo.place', 'guo.place']
+ALLOWED_HOSTS = ['127.0.0.1', '*']
 
 
 # Application definition
