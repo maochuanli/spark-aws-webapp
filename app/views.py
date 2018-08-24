@@ -12,9 +12,17 @@ import traceback
 
 
 def index(request):
+    file_obj_list = []
     bucket_name = os.environ["BUCKET_NAME"]
-    file_name_list = ['ab', 'de', 'ef']
-    return render(request, 'app/index.html', {'bucket_name': bucket_name, 'file_name_list': file_name_list})
+    try:
+        s3 = boto3.resource('s3')
+        bucket = s3.Bucket(bucket_name)
+        for s3_file in bucket.objects.all():
+            file_obj_list.append(s3_file)
+    except Exception:
+        err = traceback.format_exc()
+        print(str(err))
+    return render(request, 'app/index.html', {'bucket_name': bucket_name, 'file_obj_list': file_obj_list})
 
 
 def upload_file(request):
