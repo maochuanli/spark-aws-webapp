@@ -11,10 +11,22 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import configparser
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+AWS_CONFIG_NAME = 'aws.ini'
+
+config = configparser.ConfigParser()
+config.read(os.path.join(BASE_DIR, AWS_CONFIG_NAME))
+access_key = config.get('DEFAULT', 'aws_access_key')
+secret_access_key = config.get('DEFAULT', 'aws_secret_key')
+bucket_name = config.get('DEFAULT', 'bucket_name')
+
+os.environ["AWS_ACCESS_KEY_ID"] = access_key
+os.environ["AWS_SECRET_ACCESS_KEY"] = secret_access_key
+os.environ["BUCKET_NAME"] = bucket_name
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -25,12 +37,13 @@ SECRET_KEY = 'g(5(z+r6ll+6qw1ad9s@20+m3jdn2-j^#w+n--uy0n2uidam$4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'www.guo.place', 'guo.place']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
