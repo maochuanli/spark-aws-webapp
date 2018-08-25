@@ -17,8 +17,9 @@ def index(request):
     try:
         s3 = boto3.resource('s3')
         bucket = s3.Bucket(bucket_name)
-        for s3_file in bucket.objects.all():
-            file_obj_list.append(s3_file)
+        if bucket in s3.buckets.all():
+            for s3_file in bucket.objects.all():
+                file_obj_list.append(s3_file)
     except Exception:
         err = traceback.format_exc()
         print(str(err))
