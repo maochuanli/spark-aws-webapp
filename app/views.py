@@ -35,10 +35,19 @@ def upload_file(request):
 
 
 def handle_uploaded_file(f):
+    if not f:
+        return
+    if f.size > 5 * 1024 * 1024:
+        print('File size capped by 5 MB, file size: {} too big!'.format(f.size))
+        return
     bucket_name = os.environ["BUCKET_NAME"]
     try:
         s3 = boto3.resource('s3')
         bucket = s3.Bucket(bucket_name)
+        obj_list = bucket.objects.all()
+        if len(obj_list) > 20:
+            print("Limit 20 objects in the bucket is hit! ")
+            return
         if bucket not in s3.buckets.all():
             s3.create_bucket(Bucket=bucket_name)
 
