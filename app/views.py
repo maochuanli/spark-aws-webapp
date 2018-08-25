@@ -50,7 +50,7 @@ def handle_uploaded_file(f):
             s3.create_bucket(Bucket=bucket_name)
 
         obj_list = bucket.objects.all()
-        if len(obj_list) > 20:
+        if len(list(obj_list)) > 20:
             print("Limit 20 objects in the bucket is hit! ")
             return
 
